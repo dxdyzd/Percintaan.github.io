@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #ffe6e9; /* Warna merah muda lembut */
+        }
+        .container {
+            position: relative;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            text-align: center;
+        }
+        .no-button {
+            transition: all 0.3s ease-out;
+            position: absolute;
+        }
+        .loading-heart {
+            display: none; /* Sembunyikan secara default */
+            animation: bounce 0.8s infinite ease-in-out;
+        }
+        /* Definisi animasi bouncing */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Love Me Valentine</h1>
+
+        <div id="content-box" class="bg-white rounded-xl p-6 shadow-md">
+            <h2 id="question-text" class="text-xl font-semibold mb-4 text-gray-700">Do you love me?</h2>
+            
+            <!-- Ikon hati yang akan muncul saat loading -->
+            <div id="loading-spinner" class="loading-heart text-6xl text-red-500">
+                ❤️
+            </div>
+            
+            <div id="buttons" class="flex justify-center gap-4">
+                <button id="yes-btn" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition">
+                    Yes
+                </button>
+                <button id="no-btn" class="no-button bg-red-500 text-white font-bold py-2 px-6 rounded-full hover:bg-red-600 transition">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const noBtn = document.getElementById('no-btn');
+            const yesBtn = document.getElementById('yes-btn');
+            const container = document.querySelector('.container');
+            const contentBox = document.getElementById('content-box');
+            const questionText = document.getElementById('question-text');
+            const buttons = document.getElementById('buttons');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            // Fungsi untuk menggerakkan tombol "No"
+            function moveNoButton() {
+                const containerRect = container.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+                const randomX = Math.random() * (containerRect.width - btnRect.width) - (containerRect.width / 2);
+                const randomY = Math.random() * (containerRect.height - btnRect.height) - (containerRect.height / 2);
+                noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+
+            // Fungsi untuk menangani klik tombol "Yes"
+            function handleYesClick() {
+                // Sembunyikan tombol dan teks pertanyaan
+                questionText.style.display = 'none';
+                buttons.style.display = 'none';
+
+                // Tampilkan ikon loading
+                loadingSpinner.style.display = 'block';
+
+                // Atur timeout untuk simulasi loading
+                setTimeout(() => {
+                    // Sembunyikan ikon loading
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Tampilkan pesan sukses
+                    questionText.textContent = 'I love you too!';
+                    questionText.style.display = 'block';
+                    questionText.classList.add('text-green-600');
+                    questionText.classList.remove('text-gray-700');
+                    
+                }, 2000); // Durasi loading 2 detik
+            }
+
+            // Tambahkan event listener untuk tombol "No"
+            noBtn.addEventListener('mouseenter', moveNoButton);
+            noBtn.addEventListener('click', moveNoButton);
+
+            // Tambahkan event listener untuk tombol "Yes"
+            yesBtn.addEventListener('click', handleYesClick);
+        });
+    </script>
+</body>
+</html>
