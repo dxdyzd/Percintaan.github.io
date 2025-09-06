@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love Questions for My Sweetheart</title>
+    <title>Pertanyaan Khusus dari Pacarku</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
@@ -34,7 +34,7 @@
             display: none;
             animation: bounce 0.8s infinite ease-in-out;
         }
-        .question-container {
+        .question-input-container {
             display: none;
             margin-top: 20px;
             padding: 15px;
@@ -61,7 +61,7 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .love-letter {
+        .custom-question {
             display: none;
             text-align: left;
             padding: 20px;
@@ -70,14 +70,22 @@
             border-left: 4px solid #ff6b6b;
             margin-top: 20px;
         }
+        textarea {
+            resize: none;
+            transition: all 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-3xl font-bold mb-6 text-pink-600 heart-pulse">Love Me Bia ❤️</h1>
+        <h1 class="text-3xl font-bold mb-6 text-pink-600 heart-pulse">Pertanyaan dari Pacarku 💖</h1>
 
         <div id="content-box" class="bg-white rounded-xl p-6 shadow-md">
-            <h2 id="question-text" class="text-xl font-semibold mb-4 text-gray-700">Do you love me?</h2>
+            <h2 id="question-text" class="text-xl font-semibold mb-4 text-gray-700">Apakah kamu mencintaiku?</h2>
             
             <div id="loading-spinner" class="loading-heart text-6xl text-red-500">
                 ❤️
@@ -85,38 +93,44 @@
             
             <div id="buttons" class="flex justify-center gap-4">
                 <button id="yes-btn" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition shadow-md">
-                    Yes
+                    Ya
                 </button>
                 <button id="no-btn" class="no-button bg-red-500 text-white font-bold py-2 px-6 rounded-full hover:bg-red-600 transition shadow-md">
-                    No
+                    Tidak
                 </button>
             </div>
             
-            <!-- Container untuk pertanyaan lanjutan -->
-            <div id="followup-questions" class="question-container fade-in">
-                <h3 class="text-lg font-semibold mb-3 text-purple-700">More questions for my love:</h3>
-                <div class="space-y-3">
-                    <button class="question-btn w-full bg-pink-100 hover:bg-pink-200 text-pink-700 py-2 px-4 rounded-lg transition">
-                        What do you love most about me?
+            <!-- Input pertanyaan khusus dari pacar -->
+            <div id="question-input" class="question-input-container fade-in">
+                <h3 class="text-lg font-semibold mb-3 text-purple-700">Buat pertanyaan khusus untuk pacarmu:</h3>
+                <textarea id="custom-question-input" rows="3" class="w-full p-3 border border-gray-300 rounded-lg mb-3" placeholder="Tulis pertanyaan yang ingin kamu tanyakan..."></textarea>
+                <button id="submit-question" class="bg-pink-500 text-white font-bold py-2 px-6 rounded-full hover:bg-pink-600 transition shadow-md">
+                    Kirim Pertanyaan
+                </button>
+            </div>
+            
+            <!-- Tampilan pertanyaan khusus -->
+            <div id="custom-question-display" class="custom-question fade-in">
+                <h3 class="text-lg font-semibold mb-2 text-red-600">Pertanyaan dari pacarmu:</h3>
+                <p id="question-content" class="text-gray-700 mb-4 text-lg"></p>
+                
+                <div class="flex justify-center gap-4">
+                    <button id="answer-yes" class="bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition shadow-md">
+                        Ya
                     </button>
-                    <button class="question-btn w-full bg-pink-100 hover:bg-pink-200 text-pink-700 py-2 px-4 rounded-lg transition">
-                        When did you realize you loved me?
-                    </button>
-                    <button class="question-btn w-full bg-pink-100 hover:bg-pink-200 text-pink-700 py-2 px-4 rounded-lg transition">
-                        What's your favorite memory of us?
-                    </button>
-                    <button class="question-btn w-full bg-pink-100 hover:bg-pink-200 text-pink-700 py-2 px-4 rounded-lg transition">
-                        Where do you see us in 5 years?
+                    <button id="answer-no" class="bg-red-500 text-white font-bold py-2 px-6 rounded-full hover:bg-red-600 transition shadow-md">
+                        Tidak
                     </button>
                 </div>
             </div>
             
-            <!-- Love letter section -->
-            <div id="love-letter" class="love-letter fade-in">
-                <h3 class="text-lg font-semibold mb-2 text-red-600">My Dearest,</h3>
-                <p class="text-gray-700 mb-2">Every moment with you is a blessing I cherish deeply. Your smile brightens my darkest days, and your love gives me strength I never knew I had.</p>
-                <p class="text-gray-700 mb-2">I promise to always stand by your side, to support your dreams, and to love you more with each passing day.</p>
-                <p class="text-right text-red-500 font-semibold">Forever yours,<br>Your Love</p>
+            <!-- Jawaban romantis -->
+            <div id="romantic-answer" class="custom-question fade-in" style="display: none;">
+                <h3 class="text-lg font-semibold mb-2 text-green-600">Jawabanmu:</h3>
+                <p id="answer-text" class="text-gray-700 mb-2"></p>
+                <button id="new-question" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-600 transition shadow-md mt-3">
+                    Pertanyaan Baru
+                </button>
             </div>
         </div>
     </div>
@@ -126,15 +140,21 @@
             const noBtn = document.getElementById('no-btn');
             const yesBtn = document.getElementById('yes-btn');
             const container = document.querySelector('.container');
-            const contentBox = document.getElementById('content-box');
             const questionText = document.getElementById('question-text');
             const buttons = document.getElementById('buttons');
             const loadingSpinner = document.getElementById('loading-spinner');
-            const followupQuestions = document.getElementById('followup-questions');
-            const loveLetter = document.getElementById('love-letter');
-            const questionBtns = document.querySelectorAll('.question-btn');
+            const questionInput = document.getElementById('question-input');
+            const customQuestionInput = document.getElementById('custom-question-input');
+            const submitQuestion = document.getElementById('submit-question');
+            const customQuestionDisplay = document.getElementById('custom-question-display');
+            const questionContent = document.getElementById('question-content');
+            const answerYes = document.getElementById('answer-yes');
+            const answerNo = document.getElementById('answer-no');
+            const romanticAnswer = document.getElementById('romantic-answer');
+            const answerText = document.getElementById('answer-text');
+            const newQuestionBtn = document.getElementById('new-question');
 
-            // Fungsi untuk menggerakkan tombol "No"
+            // Fungsi untuk menggerakkan tombol "Tidak"
             function moveNoButton() {
                 const containerRect = container.getBoundingClientRect();
                 const btnRect = noBtn.getBoundingClientRect();
@@ -143,7 +163,7 @@
                 noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
             }
 
-            // Fungsi untuk menangani klik tombol "Yes"
+            // Fungsi untuk menangani klik tombol "Ya"
             function handleYesClick() {
                 // Sembunyikan tombol dan teks pertanyaan
                 questionText.style.display = 'none';
@@ -158,36 +178,66 @@
                     loadingSpinner.style.display = 'none';
                     
                     // Tampilkan pesan sukses
-                    questionText.textContent = 'I love you too! 💖';
+                    questionText.textContent = 'Aku juga mencintaimu! 💖';
                     questionText.style.display = 'block';
                     questionText.classList.add('text-pink-600', 'text-2xl', 'font-bold');
                     questionText.classList.remove('text-gray-700');
                     
-                    // Tampilkan pertanyaan lanjutan setelah 2 detik
+                    // Tampilkan input pertanyaan setelah 2 detik
                     setTimeout(() => {
-                        followupQuestions.style.display = 'block';
+                        questionInput.style.display = 'block';
                     }, 2000);
                     
-                }, 2000); // Durasi loading 2 detik
+                }, 2000);
             }
 
-            // Tambahkan event listener untuk tombol "No"
+            // Fungsi untuk menangani pengiriman pertanyaan
+            function handleQuestionSubmit() {
+                const question = customQuestionInput.value.trim();
+                if (question === '') {
+                    alert('Silakan tulis pertanyaan terlebih dahulu!');
+                    return;
+                }
+                
+                // Sembunyikan input pertanyaan
+                questionInput.style.display = 'none';
+                
+                // Tampilkan pertanyaan yang telah dibuat
+                questionContent.textContent = question;
+                customQuestionDisplay.style.display = 'block';
+            }
+
+            // Fungsi untuk menangani jawaban
+            function handleAnswer(isYes) {
+                // Sembunyikan pertanyaan
+                customQuestionDisplay.style.display = 'none';
+                
+                // Tampilkan jawaban
+                romanticAnswer.style.display = 'block';
+                
+                if (isYes) {
+                    answerText.textContent = "Ya, tentu saja! Aku selalu bersamamu dan akan selalu mendukungmu dalam segala hal. 💕";
+                } else {
+                    answerText.textContent = "Tidak, karena cintaku padamu lebih dari sekedar jawaban ya atau tidak. ❤️";
+                }
+            }
+
+            // Fungsi untuk pertanyaan baru
+            function handleNewQuestion() {
+                // Reset state
+                romanticAnswer.style.display = 'none';
+                customQuestionInput.value = '';
+                questionInput.style.display = 'block';
+            }
+
+            // Event listeners
             noBtn.addEventListener('mouseenter', moveNoButton);
             noBtn.addEventListener('click', moveNoButton);
-
-            // Tambahkan event listener untuk tombol "Yes"
             yesBtn.addEventListener('click', handleYesClick);
-            
-            // Tambahkan event listener untuk pertanyaan lanjutan
-            questionBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Sembunyikan pertanyaan lanjutan
-                    followupQuestions.style.display = 'none';
-                    
-                    // Tampilkan love letter
-                    loveLetter.style.display = 'block';
-                });
-            });
+            submitQuestion.addEventListener('click', handleQuestionSubmit);
+            answerYes.addEventListener('click', () => handleAnswer(true));
+            answerNo.addEventListener('click', () => handleAnswer(false));
+            newQuestionBtn.addEventListener('click', handleNewQuestion);
         });
     </script>
 </body>
